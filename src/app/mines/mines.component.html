@@ -1,0 +1,27 @@
+<h3 class="d-block text-center mt-5">{{!selectedMode ? 'Select difficulty' : ''}}</h3>
+<div class="col-12 d-flex">
+    <div class="mx-auto btn-group" role="group" aria-label="Basic example">
+        <button *ngIf="!selectedMode" type="button" class="btn btn-info" (click)="selectMode(MODE.EASY)">EASY</button>
+        <button *ngIf="!selectedMode" type="button" class="btn btn-success" (click)="selectMode(MODE.MEDIUM)">MEDIUM
+        </button>
+        <button *ngIf="!selectedMode" type="button" class="btn btn-danger" (click)="selectMode(MODE.HARD)">HARD</button>
+        <button *ngIf="selectedMode" type="button" class="btn btn-warning" (click)="selectMode()">RESTART</button>
+    </div>
+</div>
+<table class="mt-5 table-bordered w-100"
+       *ngIf="selectedMode">
+    <thead>
+
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of mineMatrix; let rowIndex=index">
+        <td class="text-center p-2"
+            *ngFor="let column of mineMatrix; let columnIndex=index"
+            [ngClass]="{'bg-danger': mineMatrix[rowIndex][columnIndex]==='*'}"
+            (click)="fieldClick($event,rowIndex,columnIndex)"
+            (contextmenu)="fieldClick($event,rowIndex,columnIndex)">
+            {{mineMatrix[rowIndex][columnIndex] == '?' ? ' ' : mineMatrix[rowIndex][columnIndex]}}
+        </td>
+    </tr>
+    </tbody>
+</table>
