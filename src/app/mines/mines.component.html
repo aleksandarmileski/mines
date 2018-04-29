@@ -5,23 +5,42 @@
         <button *ngIf="!selectedMode" type="button" class="btn btn-success" (click)="selectMode(MODE.MEDIUM)">MEDIUM
         </button>
         <button *ngIf="!selectedMode" type="button" class="btn btn-danger" (click)="selectMode(MODE.HARD)">HARD</button>
-        <button *ngIf="selectedMode" type="button" class="btn btn-warning" (click)="selectMode()">RESTART</button>
+        <button *ngIf="selectedMode" type="button" class="btn btn-warning" (click)="selectMode()">{{status===STATE.WON ? 'PLAY AGAIN' : 'RESTART'}}</button>
     </div>
 </div>
-<table class="mt-5 table-bordered w-100"
-       *ngIf="selectedMode">
+<!-- <h3 *ngIf="selectedMode">Fields: {{mineMatrix.length*mineMatrix.length}}</h3> 
+<h3 *ngIf="selectedMode ">Open Fields: {{shownCounter}}</h3> 
+<h3 *ngIf="selectedMode ">Status: {{status}}</h3>  -->
+<h1 *ngIf="selectedMode" class="text-center"><i class="material-icons">brightness_high</i> {{bombsNumber-setBombs}} / {{bombsNumber}}</h1> 
+<h1 *ngIf="selectedMode" class="text-center"><i class="material-icons">timer</i> {{timerSeconds}}</h1> 
+
+
+<table class="my-5 mx-auto table-bordered " *ngIf="selectedMode">
     <thead>
 
     </thead>
     <tbody>
-    <tr *ngFor="let row of mineMatrix; let rowIndex=index">
-        <td class="text-center p-2"
-            *ngFor="let column of mineMatrix; let columnIndex=index"
-            [ngClass]="{'bg-danger': mineMatrix[rowIndex][columnIndex]==='*'}"
-            (click)="fieldClick($event,rowIndex,columnIndex)"
-            (contextmenu)="fieldClick($event,rowIndex,columnIndex)">
-            {{mineMatrix[rowIndex][columnIndex] == '?' ? ' ' : mineMatrix[rowIndex][columnIndex]}}
-        </td>
-    </tr>
+        <tr *ngFor="let row of mineMatrix; let rowIndex=index">
+            <td class="text-center" 
+                *ngFor="let column of mineMatrix; let columnIndex=index" 
+                    [ngClass]="{
+                        'bg-danger': displayMineMatrix[rowIndex][columnIndex] && mineMatrix[rowIndex][columnIndex]==='*',
+                        'bg-secondary': displayMineMatrix[rowIndex][columnIndex] &&  mineMatrix[rowIndex][columnIndex]==='?',
+                        'bg-success': mineMatrix[rowIndex][columnIndex]==='*' && status === this.STATE.WON
+                    }"
+                    (click)="fieldClick($event,rowIndex,columnIndex)" 
+                    (contextmenu)="fieldClick($event,rowIndex,columnIndex)">
+                        {{!displayMineMatrix[rowIndex][columnIndex] 
+                            ? ' ' 
+                            : mineMatrix[rowIndex][columnIndex] === '?'
+                                ? ' '
+                                : mineMatrix[rowIndex][columnIndex] === '*' 
+                                    ? ' '
+                                    : mineMatrix[rowIndex][columnIndex]
+                        }}
+                        <i class="material-icons d-flex justify-content-center" *ngIf='displayMineMatrix[rowIndex][columnIndex] === undefined'>{{status === STATE.WON ? 'brightness_high' : 'flag'}}</i>
+                        <i class="material-icons d-flex justify-content-center" *ngIf="displayMineMatrix[rowIndex][columnIndex] && mineMatrix[rowIndex][columnIndex]==='*'">brightness_high</i>
+            </td>
+        </tr>
     </tbody>
 </table>

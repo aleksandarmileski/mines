@@ -1,0 +1,10 @@
+tr td {
+    border: 1px solid #6c757d;
+    height: 30px;
+    width: 30px;
+    padding: 0;
+}
+
+.material-icons {
+    font-size: 18px;
+}
