@@ -14,6 +14,12 @@
 <h1 *ngIf="selectedMode" class="text-center"><i class="material-icons">brightness_high</i> {{bombsNumber-setBombs}} / {{bombsNumber}}</h1> 
 <h1 *ngIf="selectedMode" class="text-center"><i class="material-icons">timer</i> {{timerSeconds}}</h1> 
 
+<div class="alert alert-success text-center" *ngIf="status===STATE.WON">
+    <strong>You WON!</strong> You needed only {{timerSeconds}} seconds to find all bombs!
+</div>
+<div class="alert alert-danger text-center" *ngIf="status===STATE.LOST">
+    <strong>You failed!</strong> Try again!
+ </div>
 
 <table class="my-5 mx-auto table-bordered " *ngIf="selectedMode">
     <thead>

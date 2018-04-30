@@ -3,8 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {MinesComponent} from './mines/mines.component';
 
 const routes: Routes = [
-    {path: '', redirectTo: 'mines', pathMatch: 'full'},
-    {path: 'mines', component: MinesComponent}
+    {path: '', component: MinesComponent}
 ];
 
 @NgModule({
